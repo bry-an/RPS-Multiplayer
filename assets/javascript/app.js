@@ -216,5 +216,5 @@ $(document).ready(function () {
 });
 
 
-//waiting for your move logic
-//issue: both player can't reload page else both are player2
+//issue: players can't reload page else both are player2
+//name input funky...

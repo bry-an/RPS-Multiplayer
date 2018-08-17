@@ -1,7 +1,50 @@
+%arena-player {
+    float: left;
+    min-height: 120px;
+    min-width: 150px;
+    margin: 10px;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    padding: 0;
+}
+.main {
+    margin: auto;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
 h1, h4 {
     text-align: center;
 }
 
-#arena-me, #arena-opp {
-    float: left;
+#arena {
+    min-height: 300px;
+    text-align: center;
+}
+
+#arena-me {
+    @extend %arena-player;
+    color: blue;
+}
+
+#arena-opp {
+    @extend %arena-player;
+}
+
+.choices {
+    margin: 10px;
+    padding: 10px;
+    border-radius: 3px;
+}
+
+.choices-img {
+    border: 1px solid #ccc;
+    padding: 5px;
+}
+
+.choice-icon {
+    margin: 0;
+}
+
+#status {
+    text-align: center;
 }
