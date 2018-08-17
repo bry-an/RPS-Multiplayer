@@ -199,31 +199,22 @@ $(document).ready(function () {
 
 
 
-  player1Ref.on("value", function (snap) {
+  playersRef.on("value", function (snap) {
     if (snap.val()) {
-      player1.name = snap.val().name;
-      player1.choice = snap.val().choice;
-      player1.wins = snap.val().wins;
-      player1.losses = snap.val().losses;
-    }
-    if (waitingForJudgement)
-      game.judge();
-  });
-
-  player2Ref.on("value", function (snap) {
-    if (snap.val()) {
-      if (waitingForJudgement) {
-        game.judge();
-      }
-      player2.name = snap.val().name;
-      player2.choice = snap.val().choice;
-      player2.wins = snap.val().wins;
-      player2.losses = snap.val().losses;
+      player1.name = snap.child("player1").val().name;
+      player1.choice = snap.child("player1").val().choice;
+      player1.wins = snap.child("player1").val().wins;
+      player1.losses = snap.child("player1").val().losses;
+      player2.name = snap.child("player2").val().name;
+      player2.choice = snap.child("player2").val().choice;
+      player2.wins = snap.child("player2").val().wins;
+      player2.losses = snap.child("player2").val().losses;
     }
     if (waitingForJudgement)
       game.judge();
   });
 });
+
 
 //waiting for your move logic
 //issue: both player can't reload page else both are player2
