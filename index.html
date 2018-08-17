@@ -2,14 +2,72 @@
 <html lang="en">
 
 <head>
-
     <link rel="stylesheet" href="assets/css/skeleton.css" />
     <link rel="stylesheet" href="assets/css/style.css" />
     <meta charset="utf-8" />
     <title>Rock Paper Scissors Multiplayer</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://www.gstatic.com/firebasejs/5.4.0/firebase.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="assets/javascript/app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.3.1/firebase.js"></script>
+    
 </head>
+
+<body>
+    <div class="container">
+        <div class="main">
+            <h1>
+                Multiplayer <span style="color: #711017">Rock</span>
+                <span style="color: #107235">Paper</span>
+                <span style="color: #103b72">Scissors</span>
+            </h1>
+            <h4>
+                Share this link with a friend to issue a challenge!
+            </h4>
+            <div class="row">
+                <div class="three columns player1">
+                    <div class="name">
+                        <div id="name-me">
+                            <input class = "u-full-width" id="name-me-entry" type = "text" placeholder = "Enter your name">
+                            <button id="name-me-submit">Ok</button>
+                        </div>
+                    </div>
+                    <div class="stats">
+                        <div id="stats-me"></div>
+                    </div>
+                    <div class="choices">
+                        <img src = "assets/images/rock.jpg" id="rock" class = "choices-img" />
+                        <img src = "assets/images/paper.jpg" id="paper" class = "choices-img" />
+                        <img src = "assets/images/scissors.jpg" id="scissors" class = "choices-img" />
+                    </div>
+                </div>
+                <div class="six columns versus">
+                    <div id="arena">
+                        <div id="arena-me"></div>
+                        <div id="arena-opp"></div>
+                    </div>
+                    <div id="status">Game Status: </div>
+                </div>
+                <div class="three columns player2">
+                    <div class="name">
+                        <div id="name-opp"></div>
+                    </div>
+                    <div class="stats">
+                        <div id="stats-opp"></div>
+                        <div class="choices">
+                            <div id="choices-opp"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div id="chat">
+                    <div id="chat-display"></div>
+                    <div id="chat-input"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
 
 </html>
