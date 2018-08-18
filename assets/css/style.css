@@ -18,8 +18,9 @@ h1, h4 {
 }
 
 #arena {
-  min-height: 300px;
+  min-height: 330px;
   text-align: center;
+  margin: 20px;
 }
 
 #arena-me {
@@ -60,6 +61,11 @@ h1, h4 {
 
 #status {
   text-align: center;
+}
+
+#new-game {
+  display: block;
+  margin: 10px;
 }
 
 /*# sourceMappingURL=style.css.map */

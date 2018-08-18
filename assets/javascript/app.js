@@ -46,7 +46,7 @@ connectionsRef.on("value", function (snap) {
     firstPlayer = true;
   }
   else if (numPlayers == 2) {
-    game.setStatus("Both players joined");
+    game.setStatus("Both players joined. Click an icon to make your move.");
   }
   if (!firstPlayer) {
     me = game.players[1]; //assign local machine to player 2
@@ -64,14 +64,14 @@ var game = {
       wins: 0,
       losses: 0,
       choice: "not-set",
-      nameDisp: ""
+      nameDisp: "Player 1"
     },
     player2 = {
       name: "player2",
       wins: 0,
       losses: 0,
       choice: "not-set",
-      nameDisp: ""
+      nameDisp: "Player 2"
     }
   ],
 
@@ -132,18 +132,24 @@ var game = {
     //code conclusion for non-host
     if (conclusion == "my-win") {
       me.wins++;
-      this.setStatus("You win!");
+      opp.losses++;
+      this.setStatus("You win! Play again.");
       this.updatePlayersRefWins.call(me, me.wins);
     }
     else if (conclusion == "opp-win") {
       me.losses++;
+      opp.wins++;
       this.updatePlayersRefLosses.call(me, me.losses);
-      this.setStatus("Opponent wins!");
+      this.setStatus("Opponent wins! Play again.");
     }
-    else this.setStatus("You have tied.");
+    else this.setStatus("You have tied. Play again.");
 
     $("#arena-icon-opp").append(this.returnIcon(opp.choice));
-    // this.resetGame(); //except that it resets too quickly
+    $("#arena-wins-me").text("Wins: " + me.wins);
+    $("#arena-losses-me").text("Losses: " + me.losses);
+    $("#arena-wins-opp").text("Wins: " + opp.wins);
+    $("#arena-losses-opp").text("Losses: " + opp.losses)
+    $("#status").append("<button class='button-primary' id = 'new-game'>Play again!</button>");
   },
   //core game logic
   judge: function () {
@@ -186,10 +192,9 @@ var game = {
 $(document).ready(function () {
   var player1 = game.players[0];
   var player2 = game.players[1];
-  game.resetGame();
 
   $("#rock, #paper, #scissors").on("click", function () {
-    if (numPlayers == 2) {
+    if (numPlayers == 2 && me.choice == "not-set") {
       game.setMove($(this).attr("id"));
       $(this).hide();
     }
@@ -200,6 +205,13 @@ $(document).ready(function () {
     $("#name-me-entry").val("");
     game.updatePlayersRefNameDisp.call(me, me.nameDisp);
     $("#arena-name-me").html("<p>" + me.nameDisp + "</p>");
+  });
+
+  $(document).on("click", "#new-game", function () {
+    console.log("clickey");
+    this.remove();
+    game.resetGame();
+    game.setStatus("Both players joined.")
   });
 
 
