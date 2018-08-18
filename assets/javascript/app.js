@@ -226,4 +226,4 @@ $(document).ready(function () {
 
 
 //issue: players can't reload page else both are player2
-//name input funky...
+//need chat functionality
