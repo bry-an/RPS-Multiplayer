@@ -36,7 +36,6 @@ connectedRef.on("value", function (snap) {
 });
 
 connectionsRef.on("value", function (snap) {
-  game.resetGame();
   numPlayers = snap.numChildren();
   if (numPlayers < 2) {
     game.setPlayersRef(); //clear out and initialize database variables
@@ -133,13 +132,13 @@ var game = {
     if (conclusion == "my-win") {
       me.wins++;
       opp.losses++;
+      console.log("opp losses", opp.losses)
       this.setStatus("You win! Play again.");
-      this.updatePlayersRefWins.call(me, me.wins);
     }
     else if (conclusion == "opp-win") {
       me.losses++;
       opp.wins++;
-      this.updatePlayersRefLosses.call(me, me.losses);
+      console.log("opp wins", opp.wins)
       this.setStatus("Opponent wins! Play again.");
     }
     else this.setStatus("You have tied. Play again.");
@@ -150,6 +149,10 @@ var game = {
     $("#arena-wins-opp").text("Wins: " + opp.wins);
     $("#arena-losses-opp").text("Losses: " + opp.losses)
     $("#status").append("<button class='button-primary' id = 'new-game'>Play again!</button>");
+    this.updatePlayersRefWins.call(me, me.wins);
+    this.updatePlayersRefLosses.call(me, me.losses);
+    this.updatePlayersRefChoice.call(me, "not-set");
+    this.updatePlayersRefChoice.call(opp, "not-set");
   },
   //core game logic
   judge: function () {
