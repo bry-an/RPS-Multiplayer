@@ -7,6 +7,11 @@
   min-width: 150px;
 }
 
+.clearfix::after {
+  content: "";
+  clear: both;
+}
+
 .main {
   margin: auto;
   border: 1px solid #ccc;
@@ -18,7 +23,7 @@ h1, h4 {
 }
 
 #arena {
-  min-height: 330px;
+  min-height: 200px;
   text-align: center;
   margin: 20px;
 }
@@ -61,6 +66,23 @@ h1, h4 {
 
 #status {
   text-align: center;
+}
+
+#chat {
+  max-height: 300px;
+}
+
+iframe {
+  overflow: hidden;
+}
+
+iframe body p {
+  font-size: 0.5rem;
+  line-height: 0.8;
+}
+
+#chat-input {
+  width: 83%;
 }
 
 #new-game {

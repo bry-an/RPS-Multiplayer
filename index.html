@@ -15,7 +15,7 @@
 
 <body>
     <div class="container">
-        <div class="main">
+        <div class="main clearfix">
             <h1>
                 <span style="color: #711017">Rock</span>
                 <span style="color: #107235">Paper</span>
@@ -26,7 +26,7 @@
             </h4>
             <div class="row">
                 <div class="three columns player1">
-                    <input class="u-full-width" id="name-me-entry" type="text" placeholder="Enter your name">
+                    <input class="u-full-width" id="name-me-entry" type="text" placeholder="Enter your name" />
                     <button id="name-me-submit">Ok</button>
                     <div class="choices">
                         <img src="assets/images/rock.jpg" id="rock" class="choices-img" />
@@ -54,16 +54,16 @@
                         </div>
                     </div>
                     <div id="status">Game Status: </div>
+                    <div id="chat">
+                        <iframe id="chatbox" class = "u-full-width"></iframe>
+                        <input id="chat-input" type="text" placeholder="Say something..." />
+                        <input id="chat-submit" class="button-primary" type="submit" value="Chat" />
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div id="chat">
-                    <div id="chat-display"></div>
-                    <div id="chat-input"></div>
+                <div class="row">
                 </div>
             </div>
         </div>
-    </div>
 </body>
 
 </html>

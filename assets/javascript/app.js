@@ -16,7 +16,7 @@ var connectedRef = database.ref(".info/connected"); //boolean
 var playersRef = database.ref("/players"); //ref to players child
 var player1Ref = playersRef.child("player1");
 var player2Ref = playersRef.child("player2");
-var chatsRef = database.ref("/chats"); //ref to chats child
+var chatRef = database.ref("/chats"); //ref to chats child
 var con = [];
 var numPlayers; //number of connected players
 var playerNumber; //either 1 or 2 depending on when connected
@@ -192,6 +192,7 @@ var game = {
 
 };
 
+
 $(document).ready(function () {
   var player1 = game.players[0];
   var player2 = game.players[1];
@@ -214,10 +215,8 @@ $(document).ready(function () {
     console.log("clickey");
     this.remove();
     game.resetGame();
-    game.setStatus("Both players joined.")
+    game.setStatus("Both players joined. Ready for move.")
   });
-
-
 
   playersRef.on("value", function (snap) {
     if (numPlayers == 2) {
@@ -235,6 +234,32 @@ $(document).ready(function () {
       if (waitingForJudgement)
         game.judge();
       $("#arena-name-opp").html("<p>" + opp.nameDisp + "</p>");
+    }
+  });
+
+  $("#chat-submit").on("click", function () {
+    event.preventDefault();
+    var chatText = $("#chat-input").val();
+    chatRef.push({
+      author: me.nameDisp,
+      chat: chatText,
+    });
+  });
+
+  $("#chatbox").ready(function () {
+    chatRef.on("child_added", function (snap) {
+      if (snap.val()) {
+        console.log(snap.val().author)
+        console.log(snap.val().chat)
+        $("#chatbox").contents().find("body").prepend("<p>" + snap.val().author + ": " + snap.val().chat + "</p>");
+      }
+    });
+  })
+  //enter to submit forms
+  $("input").keypress(function (event) {
+    if (event.which == 13) {
+      event.preventDefault();
+      $("#chat-input").submit();
     }
   });
 });
