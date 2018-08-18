@@ -37,6 +37,7 @@ connectedRef.on("value", function (snap) {
 
 connectionsRef.on("value", function (snap) {
   numPlayers = snap.numChildren();
+  chatRef.set({}) //clear chats when people come/go
   if (numPlayers < 2) {
     game.setPlayersRef(); //clear out and initialize database variables
     me = game.players[0]; //assign local machine to player 1
@@ -240,6 +241,7 @@ $(document).ready(function () {
   $("#chat-submit").on("click", function () {
     event.preventDefault();
     var chatText = $("#chat-input").val();
+    $("#chat-input").val("");
     chatRef.push({
       author: me.nameDisp,
       chat: chatText,
