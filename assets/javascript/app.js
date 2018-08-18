@@ -39,6 +39,7 @@ connectionsRef.on("value", function (snap) {
   game.resetGame();
   numPlayers = snap.numChildren();
   if (numPlayers < 2) {
+    game.setPlayersRef(); //clear out and initialize database variables
     me = game.players[0]; //assign local machine to player 1
     opp = game.players[1];
     game.setStatus("Waiting on other player to join.");
@@ -50,6 +51,7 @@ connectionsRef.on("value", function (snap) {
   if (!firstPlayer) {
     me = game.players[1]; //assign local machine to player 2
     opp = game.players[0];
+    $("#arena-name-opp").html("<p>" + opp.nameDisp + "</p>");
   }
 });
 
@@ -61,13 +63,15 @@ var game = {
       name: "player1",
       wins: 0,
       losses: 0,
-      choice: "not-set"
+      choice: "not-set",
+      nameDisp: ""
     },
     player2 = {
       name: "player2",
       wins: 0,
       losses: 0,
-      choice: "not-set"
+      choice: "not-set",
+      nameDisp: ""
     }
   ],
 
@@ -78,23 +82,25 @@ var game = {
   setPlayersRef: function () {
     playersRef.set({
       player1: {
-        name: player1.name,
+        name: "player1",
         wins: player1.wins,
         losses: player1.losses,
-        choice: "not-set"
+        choice: "not-set",
+        nameDisp: player2.nameDisp
       },
       player2: {
-        name: player2.name,
+        name: "player2",
         wins: player2.wins,
         losses: player2.losses,
-        choice: "not-set"
+        choice: "not-set",
+        nameDisp: player2.nameDisp
       }
     });
   },
 
-  updatePlayersRefName: function (value) {
+  updatePlayersRefNameDisp: function (value) {
     playersRef.child(this.name).update({
-      name: value,
+      nameDisp: value,
     });
   },
 
@@ -117,9 +123,8 @@ var game = {
   },
 
   resetGame: function () {
-    $("#arena-me").empty();
-    $("#arena-opp").empty();
-    this.setPlayersRef();
+    $("#arena-icon-me").empty();
+    $("#arena-icon-opp").empty();
     $("#rock, #paper, #scissors").show();
   },
 
@@ -137,7 +142,7 @@ var game = {
     }
     else this.setStatus("You have tied.");
 
-    $("#arena-opp").append(this.returnIcon(opp.choice));
+    $("#arena-icon-opp").append(this.returnIcon(opp.choice));
     // this.resetGame(); //except that it resets too quickly
   },
   //core game logic
@@ -162,7 +167,7 @@ var game = {
 
 
   setMove: function (selected) {
-    $("#arena-me").append(this.returnIcon(selected));
+    $("#arena-icon-me").append(this.returnIcon(selected));
     this.updatePlayersRefChoice.call(me, selected);
     if (opp.choice == "not-set") { //you're the first to choose
       waitingForJudgement = true;
@@ -191,27 +196,31 @@ $(document).ready(function () {
   });
 
   $("#name-me-submit").on("click", function () {
-    me.name = $("#name-me-entry").val();
+    me.nameDisp = $("#name-me-entry").val();
     $("#name-me-entry").val("");
-    game.updatePlayersRefName.call(me, me.name);
-    $("#name-me").prepend(me.name);
+    game.updatePlayersRefNameDisp.call(me, me.nameDisp);
+    $("#arena-name-me").html("<p>" + me.nameDisp + "</p>");
   });
 
 
 
   playersRef.on("value", function (snap) {
-    if (snap.val()) {
-      player1.name = snap.child("player1").val().name;
-      player1.choice = snap.child("player1").val().choice;
-      player1.wins = snap.child("player1").val().wins;
-      player1.losses = snap.child("player1").val().losses;
-      player2.name = snap.child("player2").val().name;
-      player2.choice = snap.child("player2").val().choice;
-      player2.wins = snap.child("player2").val().wins;
-      player2.losses = snap.child("player2").val().losses;
+    if (numPlayers == 2) {
+
+      if (snap.val()) {
+        player1.nameDisp = snap.child("player1").val().nameDisp;
+        player1.choice = snap.child("player1").val().choice;
+        player1.wins = snap.child("player1").val().wins;
+        player1.losses = snap.child("player1").val().losses;
+        player2.nameDisp = snap.child("player2").val().nameDisp;
+        player2.choice = snap.child("player2").val().choice;
+        player2.wins = snap.child("player2").val().wins;
+        player2.losses = snap.child("player2").val().losses;
+      }
+      if (waitingForJudgement)
+        game.judge();
+      $("#arena-name-opp").html("<p>" + opp.nameDisp + "</p>");
     }
-    if (waitingForJudgement)
-      game.judge();
   });
 });
 

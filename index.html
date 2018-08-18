@@ -10,7 +10,7 @@
     <script src="https://www.gstatic.com/firebasejs/5.4.0/firebase.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="assets/javascript/app.js"></script>
-    
+
 </head>
 
 <body>
@@ -26,36 +26,31 @@
             </h4>
             <div class="row">
                 <div class="three columns player1">
-                    <div class="name">
-                        <div id="name-me">
-                            <input class = "u-full-width" id="name-me-entry" type = "text" placeholder = "Enter your name">
-                            <button id="name-me-submit">Ok</button>
-                        </div>
-                    </div>
+                    <input class="u-full-width" id="name-me-entry" type="text" placeholder="Enter your name">
+                    <button id="name-me-submit">Ok</button>
                     <div class="stats">
                         <div id="stats-me"></div>
                     </div>
                     <div class="choices">
-                        <img src = "assets/images/rock.jpg" id="rock" class = "choices-img" />
-                        <img src = "assets/images/paper.jpg" id="paper" class = "choices-img" />
-                        <img src = "assets/images/scissors.jpg" id="scissors" class = "choices-img" />
+                        <img src="assets/images/rock.jpg" id="rock" class="choices-img" />
+                        <img src="assets/images/paper.jpg" id="paper" class="choices-img" />
+                        <img src="assets/images/scissors.jpg" id="scissors" class="choices-img" />
                     </div>
                 </div>
                 <div class="six columns versus">
                     <div id="arena">
                         <div id="arena-me">
-                            <p>Your Move</p>
+                            <div id="arena-name-me"><p>Player 1</p></div>
+                            <div id="arena-icon-me"></div>
                         </div>
                         <div id="arena-opp">
-                            <p>Opponent's Move</p>
+                            <div id = "arena-name-opp"><p>Player 2</p></div>
+                            <div id="arena-icon-opp"></div>
                         </div>
                     </div>
                     <div id="status">Game Status: </div>
                 </div>
                 <div class="three columns player2">
-                    <div class="name">
-                        <div id="name-opp"></div>
-                    </div>
                     <div class="stats">
                         <div id="stats-opp"></div>
                         <div class="choices">
