@@ -24,6 +24,7 @@ var me; // representing local machine, will point to either player 1 or 2 object
 var opp; //same, representing opponent's machine
 var firstPlayer;
 var waitingForJudgement = false; //used by computer that's listening for other player's move
+var newGameReady = true;
 
 
 var amIPlayer1;
@@ -199,10 +200,11 @@ $(document).ready(function () {
   var player2 = game.players[1];
 
   $("#rock, #paper, #scissors").on("click", function () {
-    if (numPlayers == 2 && me.choice == "not-set") {
+    if (numPlayers == 2 && me.choice == "not-set" && newGameReady) {
       game.setMove($(this).attr("id"));
       $(this).hide();
     }
+    newGameReady = false;
   });
 
   $("#name-me-submit").on("click", function () {
@@ -213,7 +215,7 @@ $(document).ready(function () {
   });
 
   $(document).on("click", "#new-game", function () {
-    console.log("clickey");
+    newGameReady = true;
     this.remove();
     game.resetGame();
     game.setStatus("Both players joined. Ready for move.")
@@ -266,6 +268,3 @@ $(document).ready(function () {
   });
 });
 
-
-//issue: players can't reload page else both are player2
-//need chat functionality
